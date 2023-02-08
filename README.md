@@ -36,6 +36,8 @@
 
 4. 게시글 작성, 상세페이지, 수정
 <img width="1408" alt="Screen Shot 2023-02-08 at 4 45 25 PM" src="https://user-images.githubusercontent.com/4710854/217466294-2d95f182-cb7f-4356-9c01-612ff000c1bc.png">
-<img width="1399" alt="Screen Shot 2023-02-08 at 4 40 48 PM" src="https://user-images.githubusercontent.com/4710854/217465632-88b09588-db2b-4497-9756-c8b51bb02b84.png">
 <img width="1349" alt="Screen Shot 2023-02-08 at 4 41 19 PM" src="https://user-images.githubusercontent.com/4710854/217465733-5864f6f2-1ad5-48d8-9aeb-be661d1ed7f1.png">
+<img width="1420" alt="Screen Shot 2023-02-08 at 4 42 03 PM" src="https://user-images.githubusercontent.com/4710854/217466453-c50cbf57-0ca9-46c9-87b4-061f6eca7643.png">
+
+
 
