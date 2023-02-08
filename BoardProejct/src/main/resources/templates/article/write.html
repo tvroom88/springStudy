@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div th:fragment="formErrorsFragment" class="alert alert-danger"
+     role="alert" th:if="${#fields.hasAnyErrors()}">
+    <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+</div>
+
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">게시글 작성 페이지</h5>
+    <form th:action="@{/article/doWrite}" th:object="${articleForm}" method="post">
+        <div th:replace="~{error/form_errors :: formErrorsFragment}"></div>
+        <div class="mb-3">
+            <label class="form-label">작성자 :</label>
+
+            <!--     관리자일경우       -->
+            <label th:if="${boardId == 1}" class="form-label">관리자</label>
+
+            <!--    일반 회원일 경우        -->
+            <label th:if="${boardId == 2}" class="form-label">일반회원</label>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">게시판 : </label>
+            <input type="text" th:field="*{category}" name="subject" id="category" class="form-control" th:text="공지사항">
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목 : </label>
+            <input type="text" th:field="*{title}" name="title" id="title" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용 : </label>
+            <textarea th:field="*{content}" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2">
+    </form>
+</div>
+</html>

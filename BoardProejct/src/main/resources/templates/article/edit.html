@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form th:action="@{/article/doModify}" th:object="${articleForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div th:replace="~{error/form_errors :: formErrorsFragment}"></div>
+
+        <input type="hidden" th:field="*{id}" class="form-control">
+        <div class="mb-3">
+            <label class="form-label">작성자 :</label>
+
+            <!--     관리자일경우       -->
+            <label th:if="${category == 1}" class="form-label">관리자</label>
+
+            <!--    일반 회원일 경우        -->
+            <label th:if="${category == 2}" class="form-label">일반회원</label>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="category" class="form-label">게시판 : </label>
+            <input type="text" th:field="*{category}" name="subject" id="category" class="form-control" th:text="공지사항">
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">제목 : </label>
+            <input type="text" th:field="*{title}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2">
+    </form>
+</div>
+</html>

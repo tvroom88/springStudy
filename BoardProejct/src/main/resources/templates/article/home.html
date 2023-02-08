@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container my-3">
+
+    <!--  공지사항 목록  -->
+    <h2>공지사항</h2>
+    <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>번호</th>
+            <th>작성날짜</th>
+            <th>수정날짜</th>
+            <th>조회</th>
+            <th>추천</th>
+            <th>작성자</th>
+            <th>게시판 유형</th>
+            <th style="width:50%">제목</th>
+
+        </tr>
+        </thead>
+        <tbody th:if="${articles1.size() > 0}">
+        <tr class="text-center" th:each="article, loop : ${articles1}">
+            <td th:text="${article.id}"></td>
+            <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:if="${article.voter != null}" th:text="${article.voter.size()}"></td>
+            <td th:unless="${article.voter != null}" th:text="0"></td>
+            <td th:text="${article.view}"></td>
+            <td th:if="${article.author != null}" th:text="${article.author.username}"></td>
+            <td th:unless="${article.author != null}" th:text="추가예정"></td>
+            <td th:text="${article.category}"></td>
+            <td class="text-start" style="max-width:600px;  word-break: break-all;">
+                <a th:href="@{|/article/detail?id=${article.id}|}" th:text="${article.title}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <h2>자유게시판</h2>
+    <!--  자유 게시판 목록  -->
+    <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>번호</th>
+            <th>작성날짜</th>
+            <th>수정날짜</th>
+            <th>조회</th>
+            <th>추천</th>
+            <th>작성자</th>
+            <th>게시판 유형</th>
+            <th style="width:50%">제목</th>
+
+        </tr>
+        </thead>
+        <tbody th:if="${articles2.size() > 0}">
+        <tr class="text-center" th:each="article, loop : ${articles2}">
+            <td th:text="${article.id}"></td>
+            <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:if="${article.voter != null}" th:text="${article.voter.size()}"></td>
+            <td th:unless="${article.voter != null}" th:text="0"></td>
+            <td th:text="${article.view}"></td>
+            <td th:if="${article.author != null}" th:text="${article.author.username}"></td>
+            <td th:unless="${article.author != null}" th:text="추가예정"></td>
+            <td th:text="${article.category}"></td>
+            <td class="text-start" style="max-width:600px;  word-break: break-all;">
+                <a th:href="@{|/article/detail?id=${article.id}|}" th:text="${article.title}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

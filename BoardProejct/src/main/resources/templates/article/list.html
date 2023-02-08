@@ -1,0 +1,94 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container my-3">
+
+    <!-- 게시글 등록 & 검색어 -->
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{|/article/write?boardId=${boardId}|}" class="btn btn-primary">게시글 등록하기</a>
+        </div>
+        <div class="col-6">
+            <div class="input-group" th:object="${searchForm}">
+                <input type="text" id="search_text" class="form-control" th:value="${search}" >
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+            </div>
+        </div>
+    </div>
+    <!-- 게시글 등록 & 검색어 -->
+    <!--  공지사항 목록  -->
+
+
+    <h2 th:if="${boardId==1}">공지사항</h2>
+    <h2 th:if="${boardId==2}">자유게시판</h2>
+
+    <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>번호</th>
+            <th>작성날짜</th>
+            <th>수정날짜</th>
+            <th>조회</th>
+            <th>추천</th>
+            <th>작성자</th>
+            <th>게시판 유형</th>
+            <th style="width:50%">제목</th>
+
+        </tr>
+        </thead>
+        <tbody th:if="${articles.size() > 0}">
+        <tr class="text-center" th:each="article, loop : ${articles}">
+            <td th:text="${article.id}"></td>
+            <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:if="${article.voter != null}" th:text="${article.voter.size()}"></td>
+            <td th:unless="${article.voter != null}" th:text="0"></td>
+            <td th:text="${article.view}"></td>
+            <td th:if="${article.author != null}" th:text="${article.author.username}"></td>
+            <td th:unless="${article.author != null}" th:text="추가예정"></td>
+            <td th:text="${article.category}"></td>
+            <td class="text-start" style="max-width:600px;  word-break: break-all;">
+                <a th:href="@{|/article/detail?id=${article.id}|}" th:text="${article.title}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징처리 시작 -->
+    <div th:unless="${pageNum == null}">
+        <ul class="pagination justify-content-center" th:each="page: ${pageNum}" style="display: inline-flex;">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" th:data-page="${page}" th:text="${page}"></a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+
+    <form th:action="@{/article/list}" method="get" id="searchForm">
+        <input type="hidden" id="search" name="search" th:value="${search}">
+        <input type="hidden" id="page" name="page" th:value="1">
+        <input type="hidden" id="boardId" name="boardId" th:value="${boardId}">
+    </form>
+
+
+    <script layout:fragment="script" type='text/javascript'>
+        const page_elements = document.getElementsByClassName("page-link");
+        Array.from(page_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                document.getElementById('search').value = document.getElementById('search_text').value; //input id
+                document.getElementById('page').value = this.dataset.page;
+                document.getElementById('searchForm').submit();
+            });
+        });
+
+
+        const btn_searchB = document.getElementById("btn_search");
+        btn_searchB.addEventListener('click', function () {
+            document.getElementById('search').value = document.getElementById('search_text').value; //input id
+            document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+            document.getElementById('searchForm').submit();
+        });
+    </script>
+
+</div>
+</html>

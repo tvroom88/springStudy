@@ -1,0 +1,58 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div layout:fragment="content" class="container my-3">
+    <h3>게시물 상세 페이지</h3>
+    <table class="table" border="1" th:each="article, loop : ${article}">
+        <thead>
+        <tr class="text-center">
+            <td th:width="200">번호</td>
+            <td th:text="${article.id}"></td>
+        </tr>
+        <tr class="text-center">
+            <td>작성날짜</td>
+            <td th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        <tr class="text-center">
+            <td>수정날짜</td>
+            <td th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        <tr class="text-center">
+            <td>작성자</td>
+            <!--            <td th:text="${article.author}"></td>-->
+            <td th:text="추가예정"></td>
+        </tr>
+        <tr class="text-center">
+            <td>조회</td>
+            <td th:text="${article.view}"></td>
+        </tr>
+        <tr class="text-center">
+            <td>제목</td>
+            <td th:text="${article.title}"></td>
+        </tr>
+        <tr class="text-center">
+            <td>내용</td>
+            <td th:text="${article.content}"></td>
+        </tr>
+        </thead>
+    </table>
+
+    <div class="my-3">
+        <a th:href="@{|/article/modify?id=${article.id}|}" class="btn btn-sm btn-outline-secondary"
+           sec:authorize="isAuthenticated()"
+           th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+           th:text="수정"></a>
+
+        <a th:href="@{|/article/delete?id=${article.id}|}" class="delete btn btn-sm btn-outline-secondary"
+           sec:authorize="isAuthenticated()"
+           th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+           th:text="삭제">
+        </a>
+
+    </div>
+</div>
+
+</html>

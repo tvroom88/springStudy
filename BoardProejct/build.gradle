@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Web - 웹기능 사용
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //서버 재시작 없이도 클래스 변경시 서버가 자동으로 재기동 된다.
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    //Lombok - getter, setter
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //H2 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+
+    //MySQL
+    implementation 'mysql:mysql-connector-java'
+
+    //JDBC 템플릿
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+
+    //thymeleaf 라이브러리 - html태그를 기반으로하여 th:속성을 이용하여 동적인 View를 제공
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    //Spring Boot Validation 라이브러리 - 화면에서 전달받은 입력 값을 검증
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //스프링 시큐리티 - 인증과 권한을 담당하는 프레임워크
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
